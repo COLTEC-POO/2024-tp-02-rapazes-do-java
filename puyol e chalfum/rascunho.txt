@@ -1,0 +1,54 @@
+super classe e subclasses
+                usuario
+String nome;
+
+String cpf;
+
+Date nasc;
+
+int ID;
+
+aluno
+String escola;
+Livro[5] livrosAlugados;
+
+professor
+String formacao;
+Livro[10] livrosAlugados;
+
+morador
+Livro[2] livrosAlugados;
+
+metodo alugar livros
+5 livros      10 livros    2 livros
+devolver livro
+
+
+classe livro
+atributos
+String titulo;
+
+String autor;
+
+int anoPub;
+
+String editora;
+
+metodos
+void imprimir(){
+System.out.println("============================");
+System.out.println("/nLivro: " + this.titulo + "/nAutor: " + this.autor + "/nEditora: " + this.editora + "/nPublicado em " + this.anoPub);
+System.out.println("============================");
+}
+
+classe biblioteca
+atributos
+
+
+metodos
+cadastrar usuario
+
+cadastrar livros
+
+exibir livros disponiveis
+
