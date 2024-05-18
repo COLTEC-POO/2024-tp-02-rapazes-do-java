@@ -61,7 +61,7 @@ public class Usuario {
     }
 
     //Métodos da super-classe Usuario
-    public boolean pegarLivro(Livro livro){  //Método para verificar se você tem espaço para pegar mais livros
+    boolean pegarLivro(Livro livro){  //Método para verificar se você tem espaço para pegar mais livros
 
         for(int i=0; i < livros_alugados.length; i++) {
             if (livros_alugados[i] == null) {  //Se o espaço estiver vazio, você consegue pegar este livro
