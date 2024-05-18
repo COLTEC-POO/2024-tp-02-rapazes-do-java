@@ -30,7 +30,9 @@ public class Biblioteca {
 
     public void cadastrarLivro(){
 
+        System.out.println();
         System.out.println("Digite os seguintes dados do livro a ser cadastrado: ");
+        System.out.println();
 
         System.out.print("Titulo do Livro: ");  //Peço o titulo a ser cadastrado
         String titulo = scan.nextLine();
@@ -53,20 +55,25 @@ public class Biblioteca {
                 ano_pub = formatador.parse(str_datapub);
                 sucesso = true;
             } catch (ParseException e) {  //Caso não, simplesmente repete
-                System.out.println("Formato de data inválido. Favor usar (dd/MM/yyyy)");
+                System.out.println("Formato de data inválido. Favor usar (dd/MM/yyyy).");
             }
         }
 
         Livro livro = new Livro(titulo, autor, editora, ano_pub, false);  //Criando uma instância de livro com os dados coletados, com emprestado = false
         livros.add(livro);  //Adicionando à lista, a instância com os dados
 
-        System.out.println("Livro cadastrado com sucesso!");
+        System.out.println();
+        System.out.println("Livro " + titulo + " cadastrado com sucesso!");
+        System.out.println();
 
     }   //Função para cadastrar livros à biblioteca
 
     public void cadastrarUsuario(){
 
+        System.out.println();
         System.out.println("Digite os seguintes dados do Usuario: ");
+        System.out.println();
+        
         System.out.println("Tipo de usuario a ser cadastrado(1 - Morador, 2 - Aluno, 3 - Professor): ");
 
         int tipo = 0;
@@ -75,6 +82,7 @@ public class Biblioteca {
 
             if(tipo < 1 || tipo > 3){
                 System.out.println("Digite um tipo válido.");
+                System.out.println();
             }
 
             else
@@ -101,7 +109,8 @@ public class Biblioteca {
                 data_nasc = formatador.parse(str_datanasc);  //Caso esteja no formato pedido, é transformado em uma variável date
                 sucesso = true;
             } catch (ParseException e) {  //Caso contrario, repete o processo
-                System.out.println("Formato de data inválido. Favor usar (dd/MM/yyyy)");
+                System.out.println("Formato de data inválido. Favor usar (dd/MM/yyyy).");
+                System.out.println();
             }
         }
 
@@ -130,13 +139,16 @@ public class Biblioteca {
         }
 
         usuarios.add(usuario);
+        System.out.println();
         System.out.println("Usuario cadastrado com sucesso!");
+        System.out.println();
 
     }  //Função para cadastrar usuarios à biblioteca
 
     public void realizarEmprestimo(){
-
+        
         //Verificando o usuario
+        System.out.println();
         System.out.println("Digite o id do usuario: ");  //Pegando o id do usuario para buscá-lo no cadastro da biblioteca
         int id_usuario = scan.nextInt();
 
@@ -150,7 +162,8 @@ public class Biblioteca {
         }
 
         if(usuario == null) {
-            System.out.println("Usuario não foi encontrado");
+            System.out.println("Usuario não foi encontrado.");
+            System.out.println();
             return;
         }
 
@@ -168,25 +181,29 @@ public class Biblioteca {
         }
 
         if(livro == null) {
-            System.out.println("Livro não foi encontrado");
+            System.out.println("Livro não foi encontrado.");
+            System.out.println();
             return;
         }
 
         //Realizando ou não o empréstimo
         if(!usuario.pegarLivro(livro)) {  //Caso ele não tenha mais espaço para pegar livros
-            System.out.println("O usuario não tem mais limite suficiente para empréstimo de livros");
+            System.out.println("O usuario não tem mais limite suficiente para empréstimo de livros.");
+            System.out.println();
             return;
         }
 
         livro.setEmprestado(true);  //Caso tenha, o livro será settado como emprestado
 
         System.out.println("Empréstimo realizado com sucesso!");
+        System.out.println();
 
     }  //Função para iniciar processo de empréstimo de livros
 
     public void realizarDevolucao(){
 
         //Verificando o usuario
+        System.out.println();
         System.out.println("Digite o id do usuario: ");  //Pegando o id do usuario para buscá-lo no cadastro da biblioteca
         int id_usuario = scan.nextInt();
 
@@ -200,7 +217,8 @@ public class Biblioteca {
         }
 
         if(usuario == null) {
-            System.out.println("Usuario não foi encontrado");
+            System.out.println("Usuario não foi encontrado.");
+            System.out.println();
             return;
         }
 
@@ -218,33 +236,42 @@ public class Biblioteca {
         }
 
         if(livro == null) {
-            System.out.println("Livro não foi encontrado");
+            System.out.println("Livro" + titulo_livro + "não foi encontrado.");
+            System.out.println();
             return;
         }
 
         //Realizando ou não a devolução
         if(!usuario.devolverLivro(livro)) {  //Caso ele não tenha o livro em seu cadastro
-            System.out.println("O usuario não o livro em seu cadastro");
+            System.out.println("O usuario não tem o livro " + titulo_livro + "em seu cadastro.");
+            System.out.println();
             return;
         }
 
         livro.setEmprestado(false);  //Caso tenha, o livro será settado como não emprestado
 
-        System.out.println("Devolução realizada com sucesso!");
+        System.out.println("Devolução do livro " + titulo_livro + " realizada com sucesso!");
+        System.out.println();
 
     }  //Função para iniciar processo de devolução de livros
 
     public void imprimirLivros(){
 
+        System.out.println();
+        
         if(livros.isEmpty()){  //Verifica se a lista livros está vazia
-            System.out.println("Não há livros na biblioteca");
+            System.out.println("Não há livros na biblioteca.");
+            System.out.println();
             return;
         }
 
-        System.out.println("Livros disponíveis na biblioteca");
+        System.out.println("Livros disponíveis na biblioteca: ");
+        System.out.println();
 
         for(Livro livro : livros)  //Imprime todos os livros disponíveis
             livro.imprimir();
+
+        System.out.println();
 
     }  //Função para imprimir todos os livros disponíveis na biblioteca
 
