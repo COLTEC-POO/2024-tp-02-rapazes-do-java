@@ -65,9 +65,9 @@ public class Livro {
     //Método da classe Livro
     void imprimir() {  //Método para imprimir dados do livro
 
-        System.out.println("=====================================\n");
+        System.out.println("=====================================");
 
-        System.out.println("Dados do livro " + this.titulo + ":");
+        System.out.println("Dados do livro " + this.titulo);
         System.out.println("Autor: " + this.autor);
         System.out.println("Editora: " + this.editora);
         System.out.println("Ano de publicação: " + this.ano_pub);
