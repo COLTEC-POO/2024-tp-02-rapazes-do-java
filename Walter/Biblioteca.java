@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Biblioteca {
 
+    //Variáveis implementadas por mim
     Scanner scan = new Scanner(System.in);
     SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -34,7 +35,9 @@ public class Biblioteca {
             System.out.println("2 - Cadastrar usuário");
             System.out.println("3 - Pegar livro");
             System.out.println("4 - Devolver livro");
-            System.out.println("5 - Ver livros disponíveis");
+            System.out.println("5 - Ver livros de um usuario");
+            System.out.println("6 - Ver livros disponíveis");
+            System.out.println("7 - Ver usuarios cadastrados");
             System.out.println("0 - Sair");
             System.out.println("=========================");
 
@@ -54,17 +57,26 @@ public class Biblioteca {
                     biblioteca.realizarDevolucao();
                     break;
                 case 5:
+                    biblioteca.emprestadosUsuario();
+                    break;
+                case 6:
                     biblioteca.imprimirLivros();
+                    break;
+                case 7:
+                    biblioteca.imprimirUsuarios();
+                    break;
                 case 0:
                     break;
                 default:
                     System.out.println("Opção inválida.");
                     System.out.println();
+                    break;
             }
         }while(opcoes != 0);
 
     }
 
+    //Métodos da classe Biblioteca pedidos no README
     public void cadastrarLivro(){
 
         System.out.println();
@@ -103,7 +115,7 @@ public class Biblioteca {
         System.out.println("Livro " + titulo + " cadastrado com sucesso!");
         System.out.println();
 
-    }   //Função para cadastrar livros à biblioteca
+    }   //Método para cadastrar livros à biblioteca
 
     public void cadastrarUsuario(){
 
@@ -206,7 +218,7 @@ public class Biblioteca {
         System.out.println("Usuario " + nome + " cadastrado com sucesso!");
         System.out.println();
 
-    }  //Função para cadastrar usuarios à biblioteca
+    }  //Método para cadastrar usuarios à biblioteca
 
     public void realizarEmprestimo(){
 
@@ -270,7 +282,7 @@ public class Biblioteca {
         System.out.println("Empréstimo do livro " + livro.getTitulo() + " para o usuario " + usuario.getNome() + " efetuado com sucesso!");
         System.out.println();
 
-    }  //Função para iniciar processo de empréstimo de livros
+    }  //Método para iniciar processo de empréstimo de livros
 
     public void realizarDevolucao(){
 
@@ -316,7 +328,7 @@ public class Biblioteca {
 
         //Realizando ou não a devolução
         if(!usuario.devolverLivro(livro)) {  //Caso ele não tenha o livro em seu cadastro
-            System.out.println("O usuario não tem o livro " + titulo_livro + "em seu cadastro.");
+            System.out.println("O usuario não tem o livro " + titulo_livro + " em seu cadastro.");
             System.out.println();
             return;
         }
@@ -326,7 +338,7 @@ public class Biblioteca {
         System.out.println("Devolução do livro " + titulo_livro + " realizada com sucesso!");
         System.out.println();
 
-    }  //Função para iniciar processo de devolução de livros
+    }  //Método para iniciar processo de devolução de livros
 
     public void imprimirLivros(){
 
@@ -348,7 +360,53 @@ public class Biblioteca {
 
         System.out.println();
 
-    }  //Função para imprimir todos os livros disponíveis na biblioteca
+    }  //Método para imprimir todos os livros disponíveis na biblioteca
+
+    //Métodos da classe Biblioteca implementados por mim
+    public void emprestadosUsuario(){
+
+        System.out.print("Id do usuario: ");
+        int id = scan.nextInt();
+
+        Usuario usuario = null;
+        boolean sucesso = false;
+
+        for(Usuario u : usuarios){
+            if(u.getId() == id) {  //Caso o id digitado seja igual ao dentro do for de busca, o usuário será definido
+                usuario = u;
+                sucesso = true;
+                break;
+            }
+        }
+
+        if(!sucesso) {
+            System.out.println("Usuario não encontrado.");
+            System.out.println();
+            return;
+        }
+
+        System.out.println();
+        usuario.imprimirLivros();
+
+    }  //Método para imprimir todos os livros de um determinado usuario
+
+    public void imprimirUsuarios(){
+
+        System.out.println();
+        System.out.println("Usuarios presentes na biblioteca: ");
+
+        if(usuarios.isEmpty()){  //Verifica se a lista livros está vazia
+            System.out.println("Não há usuários cadastrados na biblioteca.");
+            System.out.println();
+            return;
+        }
+
+        for(Usuario u: usuarios)
+            System.out.println("Nome: " + u.getNome() + "; Id: " + u.getId());
+
+        System.out.println();
+
+    }  //Método para imprimir usuarios cadastrados na biblioteca
 
     public boolean validarCpf(String cpf){
 
@@ -399,6 +457,6 @@ public class Biblioteca {
 
         return cpfValido;
 
-    }  //Função para verificar se o cpf é valido
+    }  //Método para verificar se o cpf é valido
 
 }
