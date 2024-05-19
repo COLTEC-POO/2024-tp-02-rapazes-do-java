@@ -2,7 +2,7 @@ import java.util.Date;
 
 public class Livro {
 
-    //Variável implementada por mim, para verificar se o livro está emprestado ou não
+    //Variável emplementada por mim, para verificar se o livro está emprestado ou não
     private boolean emprestado;
 
     //Variáveis da classe Livro pedidas no README
