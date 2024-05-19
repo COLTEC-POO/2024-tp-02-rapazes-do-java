@@ -315,9 +315,11 @@ public class Biblioteca {
         System.out.println("Livros disponíveis na biblioteca: ");
         System.out.println();
 
-        for(Livro livro : livros)  //Imprime todos os livros disponíveis
-            livro.imprimir();
-
+        for(Livro livro : livros){  //Imprime todos os livros disponíveis
+            if(!livro.getEmprestado())
+                livro.imprimir();
+        }
+        
         System.out.println();
 
     }  //Função para imprimir todos os livros disponíveis na biblioteca
