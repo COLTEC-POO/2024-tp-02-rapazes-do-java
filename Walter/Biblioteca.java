@@ -319,7 +319,7 @@ public class Biblioteca {
             if(!livro.getEmprestado())
                 livro.imprimir();
         }
-        
+
         System.out.println();
 
     }  //Função para imprimir todos os livros disponíveis na biblioteca
