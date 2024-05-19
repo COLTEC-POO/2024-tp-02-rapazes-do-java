@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,18 +23,19 @@ public class Biblioteca {
     public static void main(String[] args){
 
         Biblioteca biblioteca = new Biblioteca("Rapazes do Java");
+
         Scanner scanMain = new Scanner(System.in);
 
         int opcoes = -1;
         do {
             System.out.println("=========================");
             System.out.println("MENU DE OPÇÕES BIBLIOTECA");
-            System.out.println("Escolha uma opção (Digite 10 para sair)");
             System.out.println("1 - Cadastrar livro");
             System.out.println("2 - Cadastrar usuário");
             System.out.println("3 - Pegar livro");
             System.out.println("4 - Devolver livro");
             System.out.println("5 - Ver livros disponíveis");
+            System.out.println("0 - Sair");
             System.out.println("=========================");
 
             opcoes = scanMain.nextInt();
@@ -55,9 +55,13 @@ public class Biblioteca {
                     break;
                 case 5:
                     biblioteca.imprimirLivros();
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    System.out.println();
             }
-        }while(opcoes!=10);
-
+        }while(opcoes != 0);
 
     }
 
@@ -78,7 +82,7 @@ public class Biblioteca {
 
         boolean sucesso = false;
         Date ano_pub = null;
-        System.out.print("Ano de publicação do livro: ");  //Peço a data de publicação do livro a ser cadastrado em formato de string
+        System.out.print("Ano de publicação do livro(dd/MM/yyyy): ");  //Peço a data de publicação do livro a ser cadastrado em formato de string
 
         while(!sucesso) {
             String str_datapub = scan.nextLine();
@@ -88,7 +92,7 @@ public class Biblioteca {
                 sucesso = true;
             } catch (ParseException e) {  //Caso não, simplesmente repete
                 System.out.println("Formato de data inválido. Favor usar (dd/MM/yyyy).");
-                System.out.print("Ano de publicação do livro: ");  //Peço a data de publicação do livro a ser cadastrado em formato de string
+                System.out.print("Ano de publicação do livro(dd/MM/yyyy): ");  //Peço a data de publicação do livro a ser cadastrado em formato de string
             }
         }
 
@@ -127,11 +131,33 @@ public class Biblioteca {
         System.out.print("Nome do usuario: ");  //Peço o nome a ser cadastrado
         String nome = scan.nextLine();
 
-        System.out.print("Cpf do usuario: ");  //Peço o cpf a ser cadastrado
+        System.out.print("Cpf do usuario(XXX.XXX.XXX-XX): ");  //Peço o cpf a ser cadastrado
         String cpf = scan.nextLine();
+
+        if(!validarCpf(cpf)) {
+            System.out.println("Cpf invalido.");
+            System.out.println();
+            return;
+        }
+
+        for(Usuario u : usuarios){
+            if(u.getCpf().equals(cpf)) {  //Verifica se o cpf já está sendo utilizado por outro usuario
+                System.out.println("Este cpf já está sendo utilizado.");
+                System.out.println();
+                return;
+            }
+        }
 
         System.out.print("Id do usuario: ");  //Peço o id a ser cadastrado
         int id = scan.nextInt();
+
+        for(Usuario u : usuarios){
+            if(u.getId() == id) {  //Verifica se o id já está sendo utilizado por outro usuario
+                System.out.println("Este id já está sendo utilizado.");
+                System.out.println();
+                return;
+            }
+        }
 
         boolean sucesso = false;
         Date data_nasc = null;
@@ -145,7 +171,7 @@ public class Biblioteca {
             try {
                 data_nasc = formatador.parse(str_datanasc);  //Caso esteja no formato pedido, é transformado em uma variável date
                 sucesso = true;
-            } catch (ParseException e) {  //Caso contrario, repete o processo
+            } catch (ParseException e) {  //ParseException é uma exceção lançada ao ocorrer um erro na conversão de uma string ou data para outro tipo de dado
                 System.out.println("Formato de data inválido. Favor usar (dd/MM/yyyy).");
                 System.out.print("Data de nascimento do usuario(dd/MM/yyyy): ");
             }
@@ -323,5 +349,56 @@ public class Biblioteca {
         System.out.println();
 
     }  //Função para imprimir todos os livros disponíveis na biblioteca
+
+    public boolean validarCpf(String cpf){
+
+        boolean cpfValido = true;
+
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verifica se o CPF tem 11 dígitos
+        if (cpf.length() != 11)
+            cpfValido = false;
+
+        // Verifica se todos os dígitos são iguais
+        boolean allDigitsEqual = true;
+        for (int i = 1; i < cpf.length(); i++) {
+            if (cpf.charAt(i) != cpf.charAt(0)) {
+                allDigitsEqual = false;
+                break;
+            }
+        }
+        if (allDigitsEqual)
+            cpfValido = false;
+
+        // Calcula o primeiro dígito verificador
+        int sum = 0;
+        for (int i = 0; i < 9; i++) {
+            sum += (cpf.charAt(i) - '0') * (10 - i);
+        }
+        int digit1 = 11 - (sum % 11);
+        if (digit1 > 9)
+            digit1 = 0;
+
+        // Verifica o primeiro dígito verificador
+        if ((cpf.charAt(9) - '0') != digit1)
+            cpfValido = false;
+
+        // Calcula o segundo dígito verificador
+        sum = 0;
+        for (int i = 0; i < 10; i++) {
+            sum += (cpf.charAt(i) - '0') * (11 - i);
+        }
+        int digit2 = 11 - (sum % 11);
+        if (digit2 > 9)
+            digit2 = 0;
+
+        // Verifica o segundo dígito verificador
+        if ((cpf.charAt(10) - '0') != digit2)
+            cpfValido = false;
+
+        return cpfValido;
+
+    }  //Função para verificar se o cpf é valido
 
 }
