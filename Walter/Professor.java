@@ -24,7 +24,9 @@ public class Professor extends Usuario{
     //Métodos da sub-classe Professor
     public void realizarEmprestimo(Livro livro){  //Método para verificar se é possível realizar um empréstimo
 
-        if(pegarLivro(livro)  //Caso retorne true, o empréstimo será realizado
+        boolean emprestimo = pegarLivro(livro);  //Verifica se é possível realizar o empréstimo do livro;
+
+        if(emprestimo)  //Caso retorne true, o empréstimo será realizado
             System.out.println("Empréstimo do livro " + livro + " realizado com sucesso!");
 
         else  //Caso contrário, não
@@ -34,7 +36,9 @@ public class Professor extends Usuario{
 
     public void realizarDevolucao(Livro livro){  //Método para verificar se é possível realizar a devolução
 
-        if(devolverLivro(livro))  //Caso retorne true, a devolução será realizada
+        boolean devolucao = devolverLivro(livro);  //Verifica se é possível realizar a devolução do livro;
+
+        if(devolucao)  //Caso retorne true, a devolução será realizada
             System.out.println("Devolução do livro " + livro + " realizado com sucesso!");
 
         else  //Caso contrário, não
